@@ -19,6 +19,8 @@ package org.whispersystems.textsecuregcm.util;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
@@ -41,11 +43,12 @@ public class UrlSigner {
 
   public URL getPreSignedUrl(long attachmentId, HttpMethod method) {
     AmazonS3                    client  = new AmazonS3Client(credentials);
+    client.setRegion(Region.getRegion(Regions.EU_WEST_1));
     GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucket, String.valueOf(attachmentId), method);
 
     request.setExpiration(new Date(System.currentTimeMillis() + DURATION));
     request.setContentType("application/octet-stream");
-
+ 
     return client.generatePresignedUrl(request);
   }
 
