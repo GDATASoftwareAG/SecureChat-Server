@@ -43,7 +43,7 @@ public class UrlSigner {
 
   public URL getPreSignedUrl(long attachmentId, HttpMethod method) {
     AmazonS3                    client  = new AmazonS3Client(credentials);
-    client.setRegion(Region.getRegion(Regions.EU_WEST_1));
+    client.setRegion(Region.getRegion(Regions.EU_CENTRAL_1));
     GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucket, String.valueOf(attachmentId), method);
 
     request.setExpiration(new Date(System.currentTimeMillis() + DURATION));
